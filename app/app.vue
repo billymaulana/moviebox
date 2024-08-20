@@ -2,6 +2,11 @@
 import { appName } from '~/constants'
 
 useHead({
+  htmlAttrs: {
+    lang: 'en',
+  },
+  charset: 'utf-8',
+  titleTemplate: title => title !== appName ? `${title} | ${appName}` : title,
   title: appName,
 })
 </script>
@@ -12,18 +17,3 @@ useHead({
     <NuxtPage />
   </NuxtLayout>
 </template>
-
-<style>
-html,
-body,
-#__nuxt {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-html.dark {
-  background: #222;
-  color: white;
-}
-</style>

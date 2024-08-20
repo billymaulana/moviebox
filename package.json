@@ -1,7 +1,9 @@
 {
   "type": "module",
+  "version": "1.0",
   "private": true,
   "packageManager": "pnpm@9.7.0",
+  "author": "billymaulana",
   "scripts": {
     "build": "nuxi build",
     "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev",
@@ -13,24 +15,43 @@
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit"
   },
+  "dependencies": {
+    "vue3-carousel-nuxt": "^1.1.2"
+  },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.25.1",
-    "@iconify-json/carbon": "^1.1.37",
-    "@iconify-json/twemoji": "^1.1.16",
+    "@antfu/eslint-config": "^2.26.0",
+    "@iconify-json/heroicons-solid": "^1.1.12",
     "@nuxt/devtools": "^1.3.9",
-    "@nuxt/eslint": "^0.5.0",
-    "@nuxtjs/color-mode": "^3.4.2",
+    "@nuxt/eslint": "^0.5.1",
+    "@nuxt/icon": "^1.4.5",
+    "@nuxt/image": "^1.7.0",
     "@pinia/nuxt": "^0.5.3",
-    "@unocss/eslint-config": "^0.62.1",
-    "@unocss/nuxt": "^0.62.1",
+    "@unocss/eslint-config": "^0.62.2",
+    "@unocss/nuxt": "^0.62.2",
     "@vite-pwa/nuxt": "^0.9.1",
-    "@vueuse/nuxt": "^10.11.1",
-    "consola": "^3.2.3",
+    "@vueuse/nuxt": "^11.0.1",
     "eslint": "^9.9.0",
     "eslint-plugin-format": "^0.1.2",
+    "lru-cache": "^11.0.0",
     "nuxt": "^3.12.4",
-    "pinia": "^2.2.1",
+    "nuxt-typed-router": "^3.6.5",
+    "ohash": "^1.1.3",
+    "pinia": "^2.2.2",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.1",
     "typescript": "^5.5.4",
     "vue-tsc": "^2.0.29"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "9",
+        "workbox-build": "7.1.0",
+        "workbox-window": "7.1.0"
+      }
+    }
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
