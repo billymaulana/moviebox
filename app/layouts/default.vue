@@ -1,9 +1,7 @@
 <template>
-  <main class="px-10 py-20 text-center">
+  <main class="relative w-full overflow-hidden">
+    <BaseNavbar />
     <slot />
-    <Footer />
-    <div class="mx-auto mt-5 text-center text-sm opacity-25">
-      [Default Layout]
-    </div>
+    <BaseFooter />
   </main>
 </template>
