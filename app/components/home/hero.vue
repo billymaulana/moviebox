@@ -1,25 +1,43 @@
 <script setup lang="ts">
+import type { Media, Video } from '~/types'
+
 const props = defineProps({
   items: {
-    type: Array,
+    type: Array as () => Media[],
+  },
+  trailer: {
+    type: Array as () => { results: { key: string, type: string }[] }[],
   },
 })
 
-const { items } = props
-const myCarousel = ref(null)
-function customPaginationCarousel(index) {
+const { items, trailer } = props
+const myCarousel = ref<any>(null)
+
+function customPaginationCarousel(index: number) {
   myCarousel.value.slideTo(index)
+}
+const showModal = useIframeModal()
+function playTrailer(index: number) {
+  if (!trailer) {
+    return
+  }
+  const trailerData = trailer[index]?.results?.find((video: { type: string }) => video.type === 'Trailer')
+  if (trailerData) {
+    const trailerKey = trailerData.key
+    if (trailerKey) {
+      const videoUrl: string = `https://www.youtube.com/embed/${trailerKey}`
+      showModal(videoUrl)
+    }
+  }
+  else {
+    console.warn('No trailer found for the specified index or type.')
+  }
 }
 </script>
 
 <template>
   <Carousel
-    v-if="items"
-    ref="myCarousel"
-    class="hero-carousel"
-    :autoplay="4500"
-    :items-to-show="1"
-    :wrap-around="true"
+    v-if="items" ref="myCarousel" class="hero-carousel" :items-to-show="1" :wrap-around="true"
     snap-align="center"
   >
     <Slide v-for="(movie, index) in items" :key="index" class="h-full w-full">
@@ -50,7 +68,7 @@ function customPaginationCarousel(index) {
                     {{ movie.overview }}
                   </p>
                 </div>
-                <button class="btn-primary">
+                <button class="btn-primary" @click="playTrailer(index)">
                   <NuxtIcon name="heroicons:play-circle-16-solid" class="text-white" />
                   Watch Trailer
                 </button>
@@ -154,8 +172,6 @@ function customPaginationCarousel(index) {
     display: flex;
     flex-flow: column;
     gap: 10px;
-    width: 100%;
-    height: 100%;
     align-items: end;
     justify-content: center;
     bottom: 0;

@@ -28,20 +28,6 @@ export function fetchTMDB(url: string, params: Record<string, string | number | 
   return cache.get(hash)!
 }
 
-export const QUERY_LIST = {
-  movie: <QueryItem[]>([
-    { type: 'movie', title: 'Popular Movies', query: 'popular' },
-    { type: 'movie', title: 'Now Playing Movies', query: 'now_playing' },
-    { type: 'movie', title: 'Upcoming Movies', query: 'upcoming' },
-    { type: 'movie', title: 'Top Rated Movies', query: 'top_rated' },
-  ]),
-  tv: <QueryItem[]>([
-    { type: 'tv', title: 'Popular TV Shows', query: 'popular' },
-    { type: 'tv', title: 'Top Rated TV Shows', query: 'top_rated' },
-    { type: 'tv', title: 'TV Shows Airing Today', query: 'airing_today' },
-  ]),
-}
-
 export function listMedia(type: MediaType, query: string, page: number): Promise<PageResult<Media>> {
   return fetchTMDB(`${type}/${query}`, { page })
 }
@@ -101,6 +87,10 @@ export function getGenreList(media: string): Promise<{ name: string, id: number 
 /**
  * Get person (single)
  */
+
+export function getListPerson(): Promise<Person> {
+  return fetchTMDB(`person/popular`)
+}
 
 export function getPerson(id: string): Promise<Person> {
   return fetchTMDB(`person/${id}`, {
