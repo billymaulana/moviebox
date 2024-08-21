@@ -37,7 +37,7 @@ function playTrailer(index: number) {
 
 <template>
   <Carousel
-    v-if="items" ref="myCarousel" class="hero-carousel" :items-to-show="1" :wrap-around="true"
+    v-if="items" ref="myCarousel" class="hero-carousel" :autoplay="4500" :items-to-show="1" :wrap-around="true"
     snap-align="center"
   >
     <Slide v-for="(movie, index) in items" :key="index" class="h-full w-full">

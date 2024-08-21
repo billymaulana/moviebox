@@ -42,163 +42,160 @@ function playVideo(url: string) {
     <Suspense>
       <AsyncWrapper>
         <template #default="{ listPopular, listGenre, listUpcoming, list5PopularTrailer, listCast }">
-          <ClientOnly>
-            <HomeHero :items="listPopular.results.slice(0, 5)" :trailer="list5PopularTrailer" />
+          <HomeHero :items="listPopular.results.slice(0, 5)" :trailer="list5PopularTrailer" />
 
-            <section class="section-featured relative py-6">
-              <div container>
-                <div row>
-                  <div col-12 flex items-center justify-between>
-                    <h2 fontbold f-36>
-                      Featured Movie
-                    </h2>
-                    <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
-                      See More
-                      <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
-                    </NuxtLink>
-                  </div>
+          <section class="section-featured relative py-6">
+            <div container>
+              <div row>
+                <div col-12 flex items-center justify-between>
+                  <h2 fontbold f-36>
+                    Featured Movie
+                  </h2>
+                  <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
+                    See More
+                    <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
+                  </NuxtLink>
                 </div>
               </div>
-              <div class="px-[75px]" container-fluid>
-                <div row py-8 class="mx-[-20px]">
-                  <carousel :items-to-show="4" :wrap-around="false" snap-align="start" class="feature-slider w-full">
-                    <slide
-                      v-for="(listFeatured, id) in listPopular.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
-                      xl="col-3"
-                    >
-                      <BaseCard :items="listFeatured" :genre="listGenre" />
-                    </slide>
-                    <template #addons>
-                      <navigation />
-                    </template>
-                  </carousel>
-                </div>
-              </div>
-            </section>
-
-            <section class="section-arrival relative py-6">
-              <div container>
-                <div row>
-                  <div col-12 flex items-center justify-between>
-                    <h2 fontbold f-36>
-                      New Arrival
-                    </h2>
-                    <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
-                      See More
-                      <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-              <div class="px-[75px]" container-fluid>
-                <div row py-8 class="mx-[-20px]">
-                  <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="feature-slider w-full">
-                    <slide
-                      v-for="(upcoming, id) in listUpcoming.results.slice(12)" :key="id" sm="col-12" md="col-6"
-                      xl="col-3"
-                    >
-                      <BaseCard :items="upcoming" :genre="listGenre" />
-                    </slide>
-                    <template #addons>
-                      <navigation />
-                    </template>
-                  </carousel>
-                </div>
-              </div>
-            </section>
-
-            <section class="section-video relative py-6">
-              <div container>
-                <div row>
-                  <div col-12 flex items-center justify-between>
-                    <h2 fontbold f-36>
-                      Exclusive Video
-                    </h2>
-                    <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
-                      See More
-                      <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-              <div container>
-                <div row py-8 class="mx-[-10px]">
-                  <carousel
-                    :items-to-show="2.3" :wrap-around="true" snap-align="start"
-                    class="video-slider h-full w-full"
+            </div>
+            <div class="px-[75px]" container-fluid>
+              <div row py-8 class="mx-[-20px]">
+                <carousel :items-to-show="4" :wrap-around="false" snap-align="start" class="feature-slider w-full">
+                  <slide
+                    v-for="(listFeatured, id) in listPopular.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
+                    xl="col-3"
                   >
-                    <slide v-for="(itemVideo, id) in list5PopularTrailer" :key="id" sm="col-12" md="col-6" xl="col-6">
-                      <div class="card-video mx-3 w-full">
-                        <button class="card-video-btn" @click="playVideo(itemVideo.results[1].key)">
-                          <div class="card-video-group aspect-16/9">
-                            <img
-                              :src="`http://img.youtube.com/vi/${itemVideo.results[1].key}/maxresdefault.jpg`"
-                              width="400" height="600" :alt="itemVideo.results[1].name" class="img-youtube"
-                            >
-                            <div class="icon-play">
-                              <NuxtIcon name="heroicons:play-circle" size="50px" class="text-white" />
-                            </div>
-                          </div>
-                          <div mt-2 text-left text-gray-900 font-bold f-18>
-                            {{ itemVideo.results[1].name }}
-                          </div>
-                          <div text-gray-400 f-12>
-                            {{ itemVideo.results[1].type }}
-                          </div>
-                        </button>
-                      </div>
-                    </slide>
-                    <template #addons>
-                      <navigation />
-                    </template>
-                  </carousel>
-                </div>
+                    <BaseCard :items="listFeatured" :genre="listGenre" />
+                  </slide>
+                  <template #addons>
+                    <navigation />
+                  </template>
+                </carousel>
               </div>
-            </section>
+            </div>
+          </section>
 
-            <section class="section-cast relative py-6">
-              <div container>
-                <div row>
-                  <div col-12 flex items-center justify-between>
-                    <h2 fontbold f-36>
-                      Featured Cast
-                    </h2>
-                    <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
-                      See More
-                      <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
-                    </NuxtLink>
-                  </div>
+          <section class="section-arrival relative py-6">
+            <div container>
+              <div row>
+                <div col-12 flex items-center justify-between>
+                  <h2 fontbold f-36>
+                    New Arrival
+                  </h2>
+                  <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
+                    See More
+                    <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
+                  </NuxtLink>
                 </div>
               </div>
-              <div class="px-[75px]" container-fluid>
-                <div row py-8 class="mx-[-20px]">
-                  <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="feature-slider w-full">
-                    <slide
-                      v-for="(ItemCast, id) in listCast.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
-                      xl="col-3"
-                    >
-                      <div class="card">
-                        <div class="card-header">
+            </div>
+            <div class="px-[75px]" container-fluid>
+              <div row py-8 class="mx-[-20px]">
+                <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="feature-slider w-full">
+                  <slide
+                    v-for="(upcoming, id) in listUpcoming.results.slice(12)" :key="id" sm="col-12" md="col-6"
+                    xl="col-3"
+                  >
+                    <BaseCard :items="upcoming" :genre="listGenre" />
+                  </slide>
+                  <template #addons>
+                    <navigation />
+                  </template>
+                </carousel>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-video relative py-6">
+            <div container>
+              <div row>
+                <div col-12 flex items-center justify-between>
+                  <h2 fontbold f-36>
+                    Exclusive Video
+                  </h2>
+                  <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
+                    See More
+                    <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+            <div container>
+              <div row py-8 class="mx-[-10px]">
+                <carousel
+                  :items-to-show="2.3" :wrap-around="true" snap-align="start"
+                  class="video-slider h-full w-full"
+                >
+                  <slide v-for="(itemVideo, id) in list5PopularTrailer" :key="id" sm="col-12" md="col-6" xl="col-6">
+                    <div class="card-video mx-3 w-full">
+                      <button class="card-video-btn" @click="playVideo(itemVideo.results[1].key)">
+                        <div class="card-video-group aspect-16/9">
                           <img
-                            class="card-img" :src="`https://image.tmdb.org/t/p/w500/${ItemCast?.profile_path}`"
+                            :src="`http://img.youtube.com/vi/${itemVideo.results[1].key}/maxresdefault.jpg`"
+                            width="400" height="600" :alt="itemVideo.results[1].name" class="img-youtube"
                           >
+                          <div class="icon-play">
+                            <NuxtIcon name="heroicons:play-circle" size="50px" class="text-white" />
+                          </div>
                         </div>
-                        <div class="card-body">
-                          <p text-left text-gray-900 font-bold f-18>
-                            {{ ItemCast?.name }}
-                          </p>
+                        <div mt-2 text-left text-gray-900 font-bold f-18>
+                          {{ itemVideo.results[1].name }}
                         </div>
-                      </div>
-                    </slide>
-                    <template #addons>
-                      <navigation />
-                    </template>
-                  </carousel>
+                        <div text-gray-400 f-12>
+                          {{ itemVideo.results[1].type }}
+                        </div>
+                      </button>
+                    </div>
+                  </slide>
+                  <template #addons>
+                    <navigation />
+                  </template>
+                </carousel>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-cast relative py-6">
+            <div container>
+              <div row>
+                <div col-12 flex items-center justify-between>
+                  <h2 fontbold f-36>
+                    Featured Cast
+                  </h2>
+                  <NuxtLink to="/movies/featured" flex items-center text-rose-700 f-18 lh-18>
+                    See More
+                    <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
+                  </NuxtLink>
                 </div>
               </div>
-            </section>
-            <ClientOnly />
-          </clientonly>
+            </div>
+            <div class="px-[75px]" container-fluid>
+              <div row py-8 class="mx-[-20px]">
+                <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="feature-slider w-full">
+                  <slide
+                    v-for="(ItemCast, id) in listCast.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
+                    xl="col-3"
+                  >
+                    <div class="card">
+                      <div class="card-header">
+                        <img
+                          class="card-img" :src="`https://image.tmdb.org/t/p/w500/${ItemCast?.profile_path}`"
+                        >
+                      </div>
+                      <div class="card-body">
+                        <p text-left text-gray-900 font-bold f-18>
+                          {{ ItemCast?.name }}
+                        </p>
+                      </div>
+                    </div>
+                  </slide>
+                  <template #addons>
+                    <navigation />
+                  </template>
+                </carousel>
+              </div>
+            </div>
+          </section>
         </template>
       </AsyncWrapper>
       <template #fallback>
