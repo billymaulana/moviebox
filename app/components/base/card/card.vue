@@ -1,10 +1,25 @@
 <script setup lang="ts">
-import type { Media } from '~~/types'
+import type { Genre, Media } from '~~/types'
 
 const props = defineProps<{
   items: Media
+  genre?: Genre[]
 }>()
-const { items } = props
+const { items, genre } = props
+
+function mapGenreNames(genreIds: number[], genres: Genre[]): string[] {
+  if (!genreIds)
+    return []
+
+  return genreIds.map((id) => {
+    const genre = genres.find(g => g.id === id)
+    return genre ? genre.name : ''
+  })
+}
+
+function formatGenreNames(genreNames: string[]): string {
+  return genreNames.join(', ')
+}
 </script>
 
 <template>
@@ -13,10 +28,10 @@ const { items } = props
       <img class="card-img" :src="`https://image.tmdb.org/t/p/w500/${items?.poster_path}`" loading="lazy">
     </div>
     <div class="card-body">
-      <p text-gray-400 font-bold f-12>
-        USA, 2016 - Current
+      <p pt-2 text-gray-400 font-bold f-12>
+        <span uppercase>{{ items?.original_language }},</span> {{ items?.release_date }}
       </p>
-      <p text-gray-900 font-bold f-18>
+      <p py-2 text-left text-gray-900 font-bold f-18>
         {{ items?.title }}
       </p>
       <div class="flex-column w-full flex items-center justify-between">
@@ -29,7 +44,10 @@ const { items } = props
           <span text-gray-900 f-12>{{ Math.floor(items?.popularity / 100) }}%</span>
         </div>
       </div>
-      <span ext-gray-400 f-12>{{ items?.genre_ids }}</span>
+      <span mt-2 text-gray-400 f-12>
+        {{ formatGenreNames(mapGenreNames(items?.genre_ids, genre)) }}
+
+      </span>
     </div>
   </div>
 </template>
@@ -45,6 +63,12 @@ const { items } = props
   height: 100%;
   max-width: 250px;
   margin-bottom: 40px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  top: 0;
+  &:hover {
+    @apply ease-in-out duration-[.3s] group-hover: top-[-10px] group-hover:shadow-md;
+    cursor: pointer;
+  }
   .card-header {
     display: flex;
     flex-flow: column;
