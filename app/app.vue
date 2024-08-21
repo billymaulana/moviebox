@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import '@unocss/reset/tailwind.css'
 import { appName } from '~/constants'
 
 useHead({
@@ -11,11 +12,9 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <VitePwaManifest />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-    <BaseIframe />
-  </div>
+  <VitePwaManifest />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+  <BaseIframe />
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'Home',
+  layout: 'home',
 })
 
 const AsyncWrapper = defineComponent(async (_, ctx) => {
@@ -12,9 +12,9 @@ const AsyncWrapper = defineComponent(async (_, ctx) => {
       getListPerson(),
     ])
     const listFivePopular = listPopular?.results?.slice(0, 5)
-    const fivePopularId = listFivePopular.map((result: { id: number }) => result.id)
+    const fivePopularId = listFivePopular.map((result: { id: string }) => result.id)
     const videosResults = await Promise.all(
-      fivePopularId.slice(0, 5).map(async (id: number) => {
+      fivePopularId.slice(0, 5).map(async (id: string) => {
         const movie = await getMedia('movie', id)
         return movie.videos || []
       }),

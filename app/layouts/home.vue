@@ -1,9 +1,7 @@
 <template>
   <main class="relative w-full overflow-hidden">
     <BaseNavbar />
-    <div class="mt-[90px]">
-      <slot />
-    </div>
+    <slot />
     <BaseFooter />
   </main>
 </template>

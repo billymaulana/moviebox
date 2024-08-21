@@ -2,8 +2,17 @@
 const isFocused = ref(false)
 const { toggleFullMenu } = useToggleMenu()
 const route = useRoute()
-const { x, y } = useWindowScroll({ behavior: 'smooth' })
+const { y } = useWindowScroll({ behavior: 'smooth' })
 const navbarEl = ref<HTMLElement>()
+const searchStore = useSearchStore()
+const { fetchSearch } = searchStore
+const query = ref(searchStore.searchQuery)
+
+const onSearch = useDebounceFn(() => {
+  searchStore.setSearchQuery(query.value)
+  fetchSearch()
+}, 1500)
+
 const isNavbarActive = computed(() => {
   if (route.path === '/' && y.value > 650) {
     return true
@@ -16,16 +25,21 @@ const isNavbarActive = computed(() => {
   }
 })
 
-watch([y, route], () => {
-  isNavbarActive.value
-})
+function clearSearch() {
+  searchStore.clearSearchQuery()
+}
+watch(
+  () => searchStore.searchQuery,
+  (newQuery) => {
+    query.value = newQuery
+  },
+)
 </script>
 
 <template>
   <header>
     <div
-      ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'"
-      sm=" max-h-[120px] px-[20px]"
+      ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'" sm=" max-h-[120px] px-[20px]"
       lg="max-h-[80px]"
     >
       <nav class="container">
@@ -36,22 +50,25 @@ watch([y, route], () => {
               <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
             </a>
           </div>
-          <form
+          <div
             class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
             :class="{ focused: isFocused }"
           >
             <div class="form-container">
               <input
-                class="form-search-input" type="search" placeholder="What do you want to watch?"
-                aria-label="Search" @focus="isFocused = true" @blur="isFocused = false"
+                v-model="query" class="form-search-input" type="search" placeholder="What do you want to watch?" aria-label="Search"
+                @input="onSearch" @focus="isFocused = true" @blur="isFocused = false"
               >
-              <button class="btn-search">
+              <button v-show="query" class="btn-reset-input" @click="clearSearch">
+                <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
+              </button>
+              <button class="btn-search" @click="onSearch">
                 <NuxtIcon name="heroicons-solid:search" size="1rem" />
               </button>
             </div>
-          </form>
+          </div>
           <div class="flex items-center gap-[24px]" sm="order-2 my-[15px]" md="order-2">
-            <NuxtLink to=" /login">
+            <NuxtLink to="/login">
               Sign In
             </NuxtLink>
             <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
@@ -124,6 +141,7 @@ watch([y, route], () => {
         }
       }
       &::-webkit-search-cancel-button {
+        display: none;
         -webkit-appearance: none;
         appearance: none;
         height: 16px;
@@ -138,6 +156,13 @@ watch([y, route], () => {
         font-size: 16px;
         color: #d1d5dc;
       }
+    }
+    .btn-reset-input {
+      position: absolute;
+      right: 35px;
+      top: 5px;
+      z-index: 1;
+      padding: 0px 10px;
     }
     .btn-search {
       padding: 6px 10px;
