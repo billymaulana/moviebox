@@ -1,11 +1,33 @@
 <script setup lang="ts">
 const isFocused = ref(false)
 const { toggleFullMenu } = useToggleMenu()
+const route = useRoute()
+const { x, y } = useWindowScroll({ behavior: 'smooth' })
+const navbarEl = ref<HTMLElement>()
+const isNavbarActive = computed(() => {
+  if (route.path === '/' && y.value > 650) {
+    return true
+  }
+  else if (route.path !== '/') {
+    return true
+  }
+  else {
+    return false
+  }
+})
+
+watch([y, route], () => {
+  isNavbarActive.value
+})
 </script>
 
 <template>
   <header>
-    <div class="navbar" sm="max-h-[120px] px-[20px]" lg="max-h-[80px]">
+    <div
+      ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'"
+      sm=" max-h-[120px] px-[20px]"
+      lg="max-h-[80px]"
+    >
       <nav class="container">
         <div class="row items-center justify-between">
           <div class="navbar-brand">
@@ -14,7 +36,10 @@ const { toggleFullMenu } = useToggleMenu()
               <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
             </a>
           </div>
-          <form class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]" :class="{ focused: isFocused }">
+          <form
+            class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
+            :class="{ focused: isFocused }"
+          >
             <div class="form-container">
               <input
                 class="form-search-input" type="search" placeholder="What do you want to watch?"
@@ -50,6 +75,9 @@ const { toggleFullMenu } = useToggleMenu()
   transition: all 0.2s ease-in-out;
   .btn-hamburger {
     @apply bg-rose-700 flex items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full;
+  }
+  &.navbar-active {
+    background: #191a1beb;
   }
 }
 .form-search {

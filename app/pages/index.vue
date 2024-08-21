@@ -93,7 +93,7 @@ function playVideo(url: string) {
               <div row py-8 class="mx-[-20px]">
                 <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="feature-slider w-full">
                   <slide
-                    v-for="(upcoming, id) in listUpcoming.results.slice(12)" :key="id" sm="col-12" md="col-6"
+                    v-for="(upcoming, id) in listUpcoming.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
                     xl="col-3"
                   >
                     <BaseCard :items="upcoming" :genre="listGenre" />
