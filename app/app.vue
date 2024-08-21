@@ -5,15 +5,17 @@ useHead({
   htmlAttrs: {
     lang: 'en',
   },
-  charset: 'utf-8',
   titleTemplate: title => title !== appName ? `${title} | ${appName}` : title,
   title: appName,
 })
 </script>
 
 <template>
-  <VitePwaManifest />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <VitePwaManifest />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <BaseIframe />
+  </div>
 </template>
