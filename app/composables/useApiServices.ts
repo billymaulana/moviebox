@@ -42,6 +42,13 @@ export function getMedia(type: MediaType, id: string): Promise<Media> {
 /**
  * Get recommended
  */
+export function getReview(type: MediaType, id: string, page = 1): Promise<PageResult<Media>> {
+  return fetchTMDB(`${type}/${id}/reviews`, { page })
+}
+
+/**
+ * Get recommended
+ */
 export function getRecommendations(type: MediaType, id: string, page = 1): Promise<PageResult<Media>> {
   return fetchTMDB(`${type}/${id}/recommendations`, { page })
 }
@@ -88,8 +95,8 @@ export function getGenreList(media: string): Promise<{ name: string, id: number 
  * Get person (single)
  */
 
-export function getListPerson(): Promise<Person> {
-  return fetchTMDB(`person/popular`)
+export function getListPerson(page = 1): Promise<Person> {
+  return fetchTMDB(`person/popular`, { page })
 }
 
 export function getPerson(id: string): Promise<Person> {
@@ -104,5 +111,5 @@ export function getPerson(id: string): Promise<Person> {
  */
 
 export function searchShows(query: string, page = 1) {
-  return fetchTMDB('search/multi', { query, page })
+  return fetchTMDB('search/multi?sort', { query, page })
 }

@@ -5,16 +5,16 @@ export const appDescription = '"Explore movies, TV shows, ratings, and reviews w
 
 export const navMenu = [
   {
-    name: 'Movies',
-    path: '/',
+    name: 'Popular Movies',
+    path: '/movie/category/popular',
   },
   {
-    name: 'TV Shows',
-    path: '/',
+    name: 'Upcoming Movies',
+    path: '/movie/category/upcoming',
   },
   {
-    name: 'Watch',
-    path: '/',
+    name: 'Person',
+    path: '/Person',
   },
 ]
 

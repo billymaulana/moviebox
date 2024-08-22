@@ -10,3 +10,45 @@ html.dark {
   background: #222;
   color: white;
 }
+
+.my-slider{
+  .carousel__prev,
+  .carousel__next{
+    box-sizing: content-box;
+    // background: var(--vc-nav-background);
+    // border-radius: var(--vc-nav-border-radius);
+    // color: var(--vc-nav-color);
+    height: 60px;
+    width: 60px;
+    font-size: 60px;
+    text-align: center;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border: 0;
+    cursor: pointer;
+    margin: 0 10px;
+    top: 30%;
+    transform: translateY(-30%);
+  }
+  .carousel__icon {
+    width: 60px;
+    height: 60px;
+  }
+  .carousel__next{
+    right: -60px;
+  }
+  .carousel__prev{
+    left: -60px;
+  }
+  @media screen and (min-width: 300px) and (max-width: 992p){
+    .carousel__next{
+      right: -50px;
+    }
+    .carousel__prev{
+      left: -50px;
+    }
+  }
+}

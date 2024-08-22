@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import '@unocss/reset/tailwind.css'
 import { appName } from '~/constants'
 
 useHead({

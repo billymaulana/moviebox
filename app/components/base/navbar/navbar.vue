@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LocationQueryValue } from 'vue-router'
+
 const isFocused = ref(false)
 const { toggleFullMenu } = useToggleMenu()
 const route = useRoute()
@@ -6,10 +8,22 @@ const { y } = useWindowScroll({ behavior: 'smooth' })
 const navbarEl = ref<HTMLElement>()
 const searchStore = useSearchStore()
 const { fetchSearch } = searchStore
-const query = ref(searchStore.searchQuery)
+const query = ref<string | LocationQueryValue[]>(searchStore.searchQuery)
 
 const onSearch = useDebounceFn(() => {
-  searchStore.setSearchQuery(query.value)
+  let searchQuery: string
+
+  if (typeof query.value === 'string') {
+    searchQuery = query.value
+  }
+  else if (Array.isArray(query.value) && query.value.length > 0) {
+    searchQuery = query.value[0] as string
+  }
+  else {
+    searchQuery = ''
+  }
+
+  searchStore.setSearchQuery(searchQuery)
   fetchSearch()
 }, 1500)
 
@@ -17,7 +31,10 @@ const isNavbarActive = computed(() => {
   if (route.path === '/' && y.value > 650) {
     return true
   }
-  else if (route.path !== '/') {
+  if (route.name === 'type-id' && y.value > 420) {
+    return true
+  }
+  else if (route.path !== '/' && route.name !== 'type-id') {
     return true
   }
   else {
@@ -31,54 +48,65 @@ function clearSearch() {
 watch(
   () => searchStore.searchQuery,
   (newQuery) => {
-    query.value = newQuery
+    if (typeof newQuery === 'string') {
+      query.value = newQuery
+    }
+    else if (Array.isArray(newQuery) && newQuery.length > 0) {
+      query.value = newQuery[0] as string
+    }
+    else {
+      query.value = ''
+    }
   },
+  { immediate: true },
 )
 </script>
 
 <template>
   <header>
-    <div
-      ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'" sm=" max-h-[120px] px-[20px]"
-      lg="max-h-[80px]"
-    >
-      <nav class="container">
-        <div class="row items-center justify-between">
-          <div class="navbar-brand">
-            <a class="navbar-brand" href="/">
-              <img src="/moviebox-logo.svg" alt="logo MovieBox" class="sm:hidden md:flex">
-              <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
-            </a>
-          </div>
-          <div
-            class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
-            :class="{ focused: isFocused }"
-          >
-            <div class="form-container">
-              <input
-                v-model="query" class="form-search-input" type="search" placeholder="What do you want to watch?" aria-label="Search"
-                @input="onSearch" @focus="isFocused = true" @blur="isFocused = false"
-              >
-              <button v-show="query" class="btn-reset-input" @click="clearSearch">
-                <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
-              </button>
-              <button class="btn-search" @click="onSearch">
-                <NuxtIcon name="heroicons-solid:search" size="1rem" />
+    <ClientOnly>
+      <div
+        ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'" sm=" max-h-[120px] px-[20px]"
+        lg="max-h-[80px]"
+      >
+        <nav class="container">
+          <div class="row items-center justify-between">
+            <div class="navbar-brand">
+              <a class="navbar-brand" href="/">
+                <img src="/moviebox-logo.svg" alt="logo MovieBox" class="sm:hidden md:flex">
+                <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
+              </a>
+            </div>
+            <div
+              class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
+              :class="{ focused: isFocused }"
+            >
+              <div class="form-container">
+                <input
+                  v-model="query" class="form-search-input" type="search" placeholder="What do you want to watch?"
+                  aria-label="Search" @input="onSearch" @focus="isFocused = true" @blur="isFocused = false"
+                >
+                <button v-show="query" class="btn-reset-input" @click="clearSearch">
+                  <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
+                </button>
+                <button class="btn-search" @click="onSearch">
+                  <NuxtIcon name="heroicons-solid:search" size="1rem" />
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center gap-[24px]" sm="order-2 my-[15px]" md="order-2">
+              <NuxtLink to="/login">
+                Sign In
+              </NuxtLink>
+              <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
+                <NuxtIcon name="heroicons-solid:menu-alt-4" />
               </button>
             </div>
           </div>
-          <div class="flex items-center gap-[24px]" sm="order-2 my-[15px]" md="order-2">
-            <NuxtLink to="/login">
-              Sign In
-            </NuxtLink>
-            <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
-              <NuxtIcon name="heroicons-solid:menu-alt-4" />
-            </button>
-          </div>
-        </div>
-      </nav>
-    </div>
-    <BaseMenu />
+        </nav>
+      </div>
+      <BaseMenu />
+    </ClientOnly>
   </header>
 </template>
 

@@ -4,13 +4,16 @@ import { useRouter } from 'vue-router'
 
 export const useSearchStore = defineStore('search', () => {
   const router = useRouter()
-  const searchQuery = ref('')
+  const searchQuery = ref(router.currentRoute.value.query.s || '')
   const currentSearch = ref('')
   const items = ref<any[]>([])
   const count = ref(0)
   const error = ref<any>(null)
-
-  const hasSearchQuery = computed(() => searchQuery.value.trim() !== '')
+  const isLoading = ref(false)
+  const hasSearchQuery = computed(() => {
+    const query = searchQuery.value
+    return typeof query === 'string' && query.trim() !== ''
+  })
 
   function setSearchQuery(query: string) {
     searchQuery.value = query
@@ -40,12 +43,16 @@ export const useSearchStore = defineStore('search', () => {
     if (!currentSearch.value)
       return
     try {
+      isLoading.value = true
       const data = await searchShows(currentSearch.value, page ?? 1)
       count.value = data.total_results ?? count.value
       items.value.push(...data.results)
+      isLoading.value = false
     }
     catch (e: any) {
       error.value = e
+      items.value = []
+      isLoading.value = false
     }
   }
 
@@ -56,6 +63,7 @@ export const useSearchStore = defineStore('search', () => {
     count,
     error,
     hasSearchQuery,
+    isLoading,
     setSearchQuery,
     clearSearchQuery,
     fetchSearch,

@@ -12,6 +12,7 @@ export default defineConfig({
   shortcuts: [
     ['container-fluid', 'max-w-[100%]'],
     ['row', 'flex flex-wrap'],
+    ['flex-0-auto', 'flex-[0_0_auto]'],
     ['col-auto', 'flex-[0_0_auto] w-auto'],
     ['col-1', 'flex-[0_0_auto] w-[8.3333333333%]'],
     ['col-2', 'flex-[0_0_auto] w-[16.6666666667%]'],
@@ -25,8 +26,9 @@ export default defineConfig({
     ['col-10', 'flex-[0_0_auto] w-[83.3333333333%]'],
     ['col-11', 'flex-[0_0_auto] w-[91.6666666667%]'],
     ['col-12', 'flex-[0_0_auto] w-[100%]'],
+    ['v-separator-l', 'pl-[20px] border-l-[1px] border-solid border-gray-500'],
     ['h-stack', 'flex items-center justify-center min-h-screen'],
-    ['btn-primary', 'bg-red-700 text-sm font-bold leading-6 text-white gap-2 py-1.5 px-4 flex items-center rounded-md'],
+    ['btn-primary', 'bg-red-700 text-sm font-bold leading-6 text-white gap-2 py-1.5 px-4 flex items-center rounded-md hover:bg-red-600 transition-all'],
   ],
   rules: [
     [/^f-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })],
@@ -89,7 +91,7 @@ export default defineConfig({
       'sm': '320px',
       'md': '768px',
       'lg': '996px',
-      'xl': '1250px',
+      'xl': '1300px',
       '2xl': '1536px',
     },
   },

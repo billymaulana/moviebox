@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import type { Genre, Media } from '~~/types'
+import type { Genre, Media } from '~/types'
+import { LIST_GENRES } from '~/constants'
 
 const props = defineProps<{
   items: Media
-  genre?: Genre[]
 }>()
-const { items, genre } = props
+const { items } = props
 
-function mapGenreNames(genreIds: number[], genres: Genre[]): string[] {
+function mapGenreNames(genreIds: number[]): string[] {
   if (!genreIds)
     return []
-
   return genreIds.map((id) => {
-    const genre = genres.find(g => g.id === id)
+    const genre = LIST_GENRES.find(g => g.id === id)
     return genre ? genre.name : ''
   })
 }
@@ -45,7 +44,7 @@ function formatGenreNames(genreNames: string[]): string {
         </div>
       </div>
       <span mt-2 text-gray-400 f-12>
-        {{ formatGenreNames(mapGenreNames(items?.genre_ids, genre)) }}
+        {{ formatGenreNames(mapGenreNames(items?.genre_ids)) }}
 
       </span>
     </div>

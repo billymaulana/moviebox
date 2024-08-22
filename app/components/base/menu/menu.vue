@@ -14,7 +14,7 @@ const { toggleFullMenu, isShowFullMenu } = useToggleMenu()
       </div>
       <ul v-if="navMenu">
         <li v-for="menuItem in navMenu" :key="menuItem">
-          <NuxtLink :to="{ path: menuItem.path }">
+          <NuxtLink :to="{ path: menuItem.path }" @click="toggleFullMenu">
             {{ menuItem.name }}
           </NuxtLink>
         </li>
@@ -25,7 +25,7 @@ const { toggleFullMenu, isShowFullMenu } = useToggleMenu()
 
 <style scoped lang="postcss">
 .fullscreen-menu {
-  background: #be133c4d;
+  background: #23030a47;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
