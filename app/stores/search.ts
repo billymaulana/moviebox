@@ -17,8 +17,8 @@ export const useSearchStore = defineStore('search', () => {
   })
 
   function setSearchQuery(query: string) {
-    searchQuery.value = query
-    currentSearch.value = query
+    searchQuery.value = query.toString()
+    currentSearch.value = query.toString()
 
     if (query.trim() === '') {
       items.value = []
@@ -45,7 +45,7 @@ export const useSearchStore = defineStore('search', () => {
       return
     try {
       isLoading.value = true
-      const data = await searchShows(currentSearch.value, page ?? 1)
+      const data = await searchMovie(currentSearch.value, page)
       count.value = data.total_results ?? count.value
       items.value.push(...data.results)
       isLoading.value = false

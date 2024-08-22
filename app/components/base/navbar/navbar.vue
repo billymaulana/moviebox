@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { LocationQueryValue } from 'vue-router'
 
+const route = useRoute()
+const searchStore = useSearchStore()
+const query = ref((route.query.s || searchStore.searchQuery || '').toString())
 const isFocused = ref(false)
 const { toggleFullMenu } = useToggleMenu()
-const route = useRoute()
 const { y } = useWindowScroll({ behavior: 'smooth' })
 const navbarEl = ref<HTMLElement>()
-const searchStore = useSearchStore()
 const { fetchSearch } = searchStore
-const query = ref<string | LocationQueryValue[]>(searchStore.searchQuery)
 
 const onSearch = useDebounceFn(() => {
   let searchQuery: string
@@ -16,7 +16,7 @@ const onSearch = useDebounceFn(() => {
   if (typeof query.value === 'string') {
     searchQuery = query.value
   }
-  else if (Array.isArray(query.value) && query.value.length > 0) {
+  else if (Array.isArray(query.value)) {
     searchQuery = query.value[0] as string
   }
   else {
@@ -64,49 +64,47 @@ watch(
 
 <template>
   <header>
-    <ClientOnly>
-      <div
-        ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'" sm=" max-h-[120px] px-[20px]"
-        lg="max-h-[80px]"
-      >
-        <nav class="container">
-          <div class="row items-center justify-between">
-            <div class="navbar-brand">
-              <a class="navbar-brand" href="/">
-                <img src="/moviebox-logo.svg" alt="logo MovieBox" class="sm:hidden md:flex">
-                <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
-              </a>
-            </div>
-            <div
-              class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
-              :class="{ focused: isFocused }"
-            >
-              <div class="form-container">
-                <input
-                  v-model="query" class="form-search-input" type="search" placeholder="What do you want to watch?"
-                  aria-label="Search" @input="onSearch" @focus="isFocused = true" @blur="isFocused = false"
-                >
-                <button v-show="query" class="btn-reset-input" @click="clearSearch">
-                  <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
-                </button>
-                <button class="btn-search" @click="onSearch">
-                  <NuxtIcon name="heroicons:magnifying-glass-solidh" size="1rem" />
-                </button>
-              </div>
-            </div>
-            <div class="flex items-center gap-[24px]" sm="order-2 my-[15px]" md="order-2">
-              <NuxtLink to="/login">
-                Sign In
-              </NuxtLink>
-              <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
-                <NuxtIcon name="heroicons:bars-3-bottom-right-16-solid" />
+    <div
+      ref="navbarEl" :class="isNavbarActive ? 'navbar navbar-active' : 'navbar'" sm=" max-h-[120px] px-[20px]"
+      lg="max-h-[80px]"
+    >
+      <nav class="container">
+        <div class="row items-center justify-between">
+          <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+              <img src="/moviebox-logo.svg" alt="logo MovieBox" class="sm:hidden md:flex">
+              <img src="/tv.svg" alt="logo MovieBox" class="md:hidden sm:flex">
+            </a>
+          </div>
+          <div
+            class="form-search" sm="order-3 my-[10px]" md="order-2 max-w-[300px]" lg="max-w-[350px]"
+            :class="{ focused: isFocused }"
+          >
+            <div class="form-container">
+              <input
+                v-model="query" class="form-search-input" type="search" placeholder="What do you want to watch?"
+                aria-label="Search" @input="onSearch" @focus="isFocused = true" @blur="isFocused = false"
+              >
+              <button v-show="query" class="btn-reset-input" @click="clearSearch">
+                <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
+              </button>
+              <button class="btn-search" @click="onSearch">
+                <NuxtIcon name="heroicons:magnifying-glass-solid" size="1rem" />
               </button>
             </div>
           </div>
-        </nav>
-      </div>
-      <BaseMenu />
-    </ClientOnly>
+          <div class="flex items-center gap-[24px]" sm="order-2 my-[15px]" md="order-2">
+            <NuxtLink to="/login">
+              Sign In
+            </NuxtLink>
+            <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
+              <NuxtIcon name="heroicons-solid:menu-alt-4" />
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <BaseMenu />
   </header>
 </template>
 

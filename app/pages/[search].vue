@@ -60,7 +60,7 @@ useHead({
           <BaseCard :items="listSearch" :genre="LIST_GENRES" />
         </div>
         <div ref="tailEl" item-center w-full flex justify-center text-center>
-          <NuxtIcon v-if="isLoading" name="mynaui:spinner-one" ma animate-spin text-4xl />
+          <NuxtIcon v-if="isLoading" name="formkit:spinner" ma animate-spin text-4xl />
         </div>
       </div>
     </div>
