@@ -49,7 +49,7 @@ function playTrailer(index: number) {
                 class="hero-bg"
                 :style="`background-image:url(https://image.tmdb.org/t/p/original${movie.backdrop_path});`"
               />
-              <div class="hero-content">
+              <div class="hero-content" sm="w-full" md="w-[50%] mx-[30px]" lg="w-[40%]" xl="mx-0">
                 <h1 class="hero-content-title">
                   {{ movie.title }}
                 </h1>
@@ -139,7 +139,6 @@ function playTrailer(index: number) {
     z-index: 9999;
     position: relative;
     height: 100%;
-    width: 40%;
     display: flex;
     flex-flow: column;
     gap: 8px;
@@ -148,6 +147,7 @@ function playTrailer(index: number) {
     .hero-content-title {
       font-size: 48px;
       font-weight: bold;
+      text-align: left;
     }
     .hero-content-desc {
       font-size: 14px;
