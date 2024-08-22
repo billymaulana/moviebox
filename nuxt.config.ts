@@ -49,6 +49,10 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+    prerender: {
+      crawlLinks: false,
+      routes: ['/', '/person'],
+    },
   },
   routeRules: {
     '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
