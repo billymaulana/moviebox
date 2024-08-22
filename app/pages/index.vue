@@ -3,6 +3,25 @@ definePageMeta({
   layout: 'home',
 })
 
+const breakpoints = ref({
+  320: {
+    itemsToShow: 1,
+    snapAlign: 'center',
+  },
+  768: {
+    itemsToShow: 1,
+    snapAlign: 'center',
+  },
+  1024: {
+    itemsToShow: 3,
+    snapAlign: 'center',
+  },
+  1280: {
+    itemsToShow: 4,
+    snapAlign: 'center',
+  },
+})
+
 const AsyncWrapper = defineComponent(async (_, ctx) => {
   try {
     const [listPopular, listUpcoming, listCast] = await Promise.all([
@@ -57,7 +76,7 @@ function playVideo(url: string) {
                 </div>
               </div>
               <div class="row py-8">
-                <carousel :items-to-show="4" :wrap-around="false" snap-align="start" class="my-slider w-full">
+                <carousel :breakpoints="breakpoints" :wrap-around="false" snap-align="start" class="my-slider w-full">
                   <slide
                     v-for="(listFeatured, id) in listPopular.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
                     xl="col-3"
@@ -88,7 +107,7 @@ function playVideo(url: string) {
                 </div>
               </div>
               <div class="row py-8">
-                <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="my-slider w-full">
+                <carousel :breakpoints="breakpoints" :wrap-around="true" snap-align="start" class="my-slider w-full">
                   <slide
                     v-for="(upcoming, id) in listUpcoming.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
                     xl="col-3"
@@ -166,7 +185,7 @@ function playVideo(url: string) {
                 </div>
               </div>
               <div class="row py-8">
-                <carousel :items-to-show="4" :wrap-around="true" snap-align="start" class="my-slider w-full">
+                <carousel :breakpoints="breakpoints" :wrap-around="true" snap-align="start" class="my-slider w-full">
                   <slide
                     v-for="(itemCast, id) in listCast.results.slice(0, 12)" :key="id" sm="col-12" md="col-6"
                     xl="col-3"

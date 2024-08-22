@@ -43,12 +43,13 @@ html.dark {
   .carousel__prev{
     left: -60px;
   }
-  @media screen and (min-width: 300px) and (max-width: 992p){
+
+  @media screen and (min-width: 300px) and (max-width: 767px){
     .carousel__next{
-      right: -50px;
+      right: -40px;
     }
     .carousel__prev{
-      left: -50px;
+      left: -40px;
     }
-  }
+  }    
 }

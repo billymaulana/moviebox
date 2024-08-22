@@ -25,7 +25,7 @@ function imageLoadOnError(e) {
 </script>
 
 <template>
-  <div v-if="items" class="card">
+  <div v-if="items" class="card" sm="max-w-[85%] mx-[20px]" lg="max-w-[250px] mx-0">
     <div class="card-header">
       <img class="card-img" :src="`https://image.tmdb.org/t/p/w500/${items?.poster_path}`" loading="lazy" @error="imageLoadOnError">
     </div>
@@ -63,7 +63,6 @@ function imageLoadOnError(e) {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  max-width: 250px;
   margin-bottom: 40px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   top: 0;
