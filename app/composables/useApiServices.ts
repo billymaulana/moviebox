@@ -111,5 +111,5 @@ export function getPerson(id: string): Promise<Person> {
  */
 
 export function searchShows(query: string, page = 1) {
-  return fetchTMDB('search/multi?', { query, page })
+  return fetchTMDB(`search/multi?query=${query}&include_adult=false&language=en-US&page=${page}`)
 }
