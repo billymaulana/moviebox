@@ -6,14 +6,25 @@ const items = computed(() => searchStore.items)
 const currentSearch = computed(() => searchStore.currentSearch)
 const isLoading = computed(() => searchStore.isLoading)
 const count = computed(() => searchStore.count)
+const { loadingNext } = searchStore
+const tailEl = ref<HTMLDivElement>()
 
-function loadMore() {
-  const nextPage = Math.ceil(searchStore.items.length / 20) + 1
-  searchStore.fetchSearch(nextPage)
+if (import.meta.client) {
+  loadingNext()
+  useIntervalFn(() => {
+    if (!tailEl.value || isLoading.value)
+      return
+    if (count.value != null && items.value.length >= count.value)
+      return
+    const { top } = tailEl.value.getBoundingClientRect()
+    const delta = top - window.innerHeight
+    if (delta < 400)
+      loadingNext()
+  }, 500)
 }
-
-watch(items, () => {
-})
+else {
+  await loadingNext()
+}
 
 useHead({
   title: computed(() => `Search: ${currentSearch.value}`),
@@ -48,11 +59,8 @@ useHead({
         <div v-for="(listSearch, id) in items" :key="id" sm="col-12" md="col-6" xl="col-3">
           <BaseCard :items="listSearch" :genre="LIST_GENRES" />
         </div>
-        <div sm="col-12">
-          {{ count }}
-          <button class="mx-auto btn-primary flex items-center justify-center text-center" @click="loadMore">
-            Load More
-          </button>
+        <div ref="tailEl" item-center w-full flex justify-center text-center>
+          <NuxtIcon v-if="isLoading" name="icomoon-free:spinner3" ma animate-spin text-4xl />
         </div>
       </div>
     </div>

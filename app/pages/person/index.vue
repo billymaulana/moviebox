@@ -49,17 +49,19 @@ else {
           </h1>
         </div>
       </div>
-      <div class="row py-8">
+      <div class="row justify-center py-8">
         <div v-for="(itemCast, id) in items" :key="id" sm="col-12" md="col-6" xl="col-3">
           <NuxtLink :to="`/person/${itemCast.id}`" class="w-full">
             <BaseCardCast :item="itemCast" />
           </NuxtLink>
         </div>
-        <div ref="tailEl" w-full>
-          Load More ...
+        <div v-if="isLoading" class="col-12">
+          <div class="flex-flow h-[75vh] flex flex-col items-center justify-center bg-white">
+            <BaseSpinner />
+          </div>
         </div>
-        <div v-if="isLoading" animate-pulse p10>
-          <div i-carbon:circle-dash ma animate-spin text-4xl />
+        <div ref="tailEl" mx-auto col-12 flex items-center justify-center>
+          <NuxtIcon v-if="isLoading" name="icomoon-free:spinner3" ma flex animate-spin text-4xl />
         </div>
       </div>
     </div>

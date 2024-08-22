@@ -8,6 +8,7 @@ export const useSearchStore = defineStore('search', () => {
   const currentSearch = ref('')
   const items = ref<any[]>([])
   const count = ref(0)
+  const page = ref(0)
   const error = ref<any>(null)
   const isLoading = ref(false)
   const hasSearchQuery = computed(() => {
@@ -55,6 +56,18 @@ export const useSearchStore = defineStore('search', () => {
       isLoading.value = false
     }
   }
+  async function loadingNext() {
+    if (isLoading.value)
+      return
+    isLoading.value = true
+    try {
+      page.value += 1
+      await fetchSearch(page.value)
+    }
+    finally {
+      isLoading.value = false
+    }
+  }
 
   return {
     searchQuery,
@@ -67,6 +80,7 @@ export const useSearchStore = defineStore('search', () => {
     setSearchQuery,
     clearSearchQuery,
     fetchSearch,
+    loadingNext,
   }
 })
 

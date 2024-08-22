@@ -19,12 +19,15 @@ function mapGenreNames(genreIds: number[]): string[] {
 function formatGenreNames(genreNames: string[]): string {
   return genreNames.join(', ')
 }
+function imageLoadOnError(e) {
+  e.target.src = 'https://ih1.redbubble.net/image.4905811447.8675/flat,750x,075,f-pad,750x1000,f8f8f8.jpg'
+}
 </script>
 
 <template>
   <div v-if="items" class="card">
     <div class="card-header">
-      <img class="card-img" :src="`https://image.tmdb.org/t/p/w500/${items?.poster_path}`" loading="lazy">
+      <img class="card-img" :src="`https://image.tmdb.org/t/p/w500/${items?.poster_path}`" loading="lazy" @error="imageLoadOnError">
     </div>
     <div class="card-body">
       <p pt-2 text-gray-400 font-bold f-12>
