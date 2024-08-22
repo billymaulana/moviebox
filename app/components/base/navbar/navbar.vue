@@ -90,7 +90,7 @@ watch(
                   <NuxtIcon name="heroicons:x-mark-solid" class="text-white" />
                 </button>
                 <button class="btn-search" @click="onSearch">
-                  <NuxtIcon name="heroicons-solid:search" size="1rem" />
+                  <NuxtIcon name="heroicons:magnifying-glass-solidh" size="1rem" />
                 </button>
               </div>
             </div>
@@ -99,7 +99,7 @@ watch(
                 Sign In
               </NuxtLink>
               <button class="btn-hamburger" sm="right-[20px]" @click="toggleFullMenu">
-                <NuxtIcon name="heroicons-solid:menu-alt-4" />
+                <NuxtIcon name="heroicons:bars-3-bottom-right-16-solid" />
               </button>
             </div>
           </div>

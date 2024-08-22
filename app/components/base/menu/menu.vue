@@ -9,7 +9,7 @@ const { toggleFullMenu, isShowFullMenu } = useToggleMenu()
     <nav class="main-nav">
       <div class="flex-end w-full flex items-center justify-end" sm="px-[20px]" xl="py-[20px] px-[0]">
         <button class="btn-hamburger-close" @click="toggleFullMenu">
-          <NuxtIcon name="heroicons-solid:x" class="text-white" />
+          <NuxtIcon name="heroicons:x-mark" class="text-white" />
         </button>
       </div>
       <ul v-if="navMenu">

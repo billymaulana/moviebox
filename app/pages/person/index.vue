@@ -61,7 +61,7 @@ else {
           </div>
         </div>
         <div ref="tailEl" mx-auto col-12 flex items-center justify-center>
-          <NuxtIcon v-if="isLoading" name="icomoon-free:spinner3" ma flex animate-spin text-4xl />
+          <NuxtIcon v-if="isLoading" name="mynaui:spinner-one" ma flex animate-spin text-4xl />
         </div>
       </div>
     </div>

@@ -52,7 +52,7 @@ function playVideo(url: string) {
                   </h2>
                   <NuxtLink to="/movie/category/popular" class="flex items-center text-rose-700 f-18 lh-18">
                     See More
-                    <NuxtIcon name="heroicons-solid:chevron-right" class="text-red-700" />
+                    <NuxtIcon name="heroicons:chevron-right-solid" class="text-red-700" />
                   </NuxtLink>
                 </div>
               </div>
@@ -83,7 +83,7 @@ function playVideo(url: string) {
                   </h2>
                   <NuxtLink to="/movie/category/upcoming" class="flex items-center text-rose-700 f-18 lh-18">
                     See More
-                    <NuxtIcon name="heroicons-solid:chevron-right" class="text-red-700" />
+                    <NuxtIcon name="heroicons:chevron-right-solid" class="text-red-700" />
                   </NuxtLink>
                 </div>
               </div>
@@ -114,7 +114,7 @@ function playVideo(url: string) {
                   </h2>
                   <NuxtLink to="/" class="flex items-center text-rose-700 f-18 lh-18">
                     See More
-                    <NuxtIcon name="heroicons-solid:chevron-right" class="text-red-700" />
+                    <NuxtIcon name="heroicons:chevron-right-solid" class="text-red-700" />
                   </NuxtLink>
                 </div>
               </div>
@@ -161,7 +161,7 @@ function playVideo(url: string) {
                   </h2>
                   <NuxtLink to="/person" flex items-center text-rose-700 f-18 lh-18>
                     See More
-                    <NuxtIcon name="heroicons-solid:chevron-right" text-red-700 />
+                    <NuxtIcon name="heroicons:chevron-right-solid" text-red-700 />
                   </NuxtLink>
                 </div>
               </div>
